@@ -39,4 +39,10 @@ public class CachedRoomRepository : IRoomRepository
         _inner.Save(room);
         // BUG: Forgets to invalidate cache -> GetAvailableRooms returns stale data
     }
+
+    public void SeedRooms(List<Room> rooms)
+    {
+        foreach (var room in rooms)
+            _inner.SeedRooms(rooms);
+    }
 }

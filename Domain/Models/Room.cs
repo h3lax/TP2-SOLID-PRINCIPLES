@@ -1,4 +1,4 @@
-namespace HotelReservation.Models;
+namespace HotelReservation.Domain;
 
 public class Room
 {
@@ -8,4 +8,13 @@ public class Room
     public decimal PricePerNight { get; set; }
     public bool IsAvailable { get; set; } = true;
 
+    public decimal CalculatePrice(int nightsBooked)
+    {
+        return PricePerNight * nightsBooked;
+    }
+    
+    public bool CanAccommodate(int guestCount)
+    {
+        return guestCount <= MaxGuests;
+    }
 }

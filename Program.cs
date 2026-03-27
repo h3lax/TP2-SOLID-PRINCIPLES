@@ -1,18 +1,31 @@
-using HotelReservation.Models;
-using HotelReservation.Services;
-using HotelReservation.Interfaces;
-using HotelReservation.Events;
-using HotelReservation.Repositories;
+using HotelReservation.Domain;
+using HotelReservation.Application;
+using HotelReservation.Infrastructure;
+
+
 
 Console.WriteLine("=== Le Mas des Oliviers - Hotel Management System ===");
 Console.WriteLine();
 
 // ---------------------------------------------------------------
+// Scenario 0: Chargement config et fixtures
+// ---------------------------------------------------------------
+
+var roomsMock = new List<Room>
+{
+    new Room { Id = "101", Type = "Standard", MaxGuests = 2, PricePerNight = 80m },
+    new Room { Id = "102", Type = "Standard", MaxGuests = 2, PricePerNight = 80m },
+    new Room { Id = "201", Type = "Suite", MaxGuests = 2, PricePerNight = 200m },
+    new Room { Id = "301", Type = "Family", MaxGuests = 4, PricePerNight = 120m }
+};
+
+DependencyConfig.InitData(roomsMock);
+var reservationService = DependencyConfig.GetReservationService();
+
+// ---------------------------------------------------------------
 // Scenario 1: Creating Reservations (uses ReservationService — SRP violation)
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 1: Creating Reservations ---");
-
-var reservationService = new ReservationService();
 
 var id1 = reservationService.CreateReservation(
     "Alice Martin", "101", new DateTime(2025, 6, 15), new DateTime(2025, 6, 18),

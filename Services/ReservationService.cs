@@ -2,22 +2,17 @@ namespace HotelReservation.Services;
 
 using HotelReservation.Models;
 using HotelReservation.Infrastructure;
+using HotelReservation.Repositories;
 
 // SRP VIOLATION (Example 1): This class mixes three levels of concern:
 // - INFRASTRUCTURE: direct data access, logging
 // - BUSINESS: availability check, price calculation, validation
 // - APPLICATION: workflow orchestration
-public class ReservationService
+public class ReservationService (FileLogger logger, IRoomRepository roomRepository)
 {
+
     // INFRA: direct data storage
     private static readonly Dictionary<string, Reservation> _reservations = new();
-    private static readonly List<Room> _rooms = new()
-    {
-        new Room { Id = "101", Type = "Standard", MaxGuests = 2, PricePerNight = 80m },
-        new Room { Id = "102", Type = "Standard", MaxGuests = 2, PricePerNight = 80m },
-        new Room { Id = "201", Type = "Suite", MaxGuests = 2, PricePerNight = 200m },
-        new Room { Id = "301", Type = "Family", MaxGuests = 4, PricePerNight = 120m }
-    };
 
     private static int _counter = 0;
 
@@ -25,10 +20,10 @@ public class ReservationService
         DateTime checkOut, int guestCount, string roomType, string email)
     {
         // INFRA: logging
-        Console.WriteLine($"[LOG] Creating reservation for {guestName}...");
+        logger.Log($"[LOG] Creating reservation for {guestName}...");
 
         // BUSINESS: find room
-        var room = _rooms.FirstOrDefault(r => r.Id == roomId);
+        var room = roomRepository.GetAvailableRooms(checkIn, checkOut).FirstOrDefault(r => r.Id == roomId);
         if (room == null)
             throw new Exception($"Room {roomId} not found");
 
@@ -82,7 +77,12 @@ public class ReservationService
         return _reservations.Values.ToList();
     }
 
-    public static List<Room> GetRooms() => _rooms;
+    public static List<Room> GetRooms(DateTime checkIn, DateTime checkOut){
+        
+        IReservationRepository reservationRepo = new InMemoryReservationRepository();
+        IRoomRepository roomRepository = new InMemoryRoomRepository(reservationRepo);
+        return roomRepository.GetAvailableRooms(checkIn, checkOut);
+    }
 
     public static void Reset()
     {

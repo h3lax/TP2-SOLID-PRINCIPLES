@@ -1,4 +1,4 @@
-namespace HotelReservation.Domain;
+namespace HotelReservation.Infrastructure;
 
 public class CacheEntry
 {

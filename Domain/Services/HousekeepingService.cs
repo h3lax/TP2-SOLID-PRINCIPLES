@@ -1,4 +1,4 @@
-namespace HotelReservation.Services;
+namespace HotelReservation.Domain;
 
 using HotelReservation.Infrastructure;
 using HotelReservation.Models;
@@ -6,6 +6,9 @@ using HotelReservation.Models;
 // DIP VIOLATION (Example 2): High-level housekeeping logic directly depends on
 // low-level EmailSender. If we want to notify by SMS instead, we must modify this class.
 public class HousekeepingService
+(
+    ICleaningNotifier notifier
+)
 {
     // Direct dependency on concrete EmailSender
     private readonly EmailSender _emailSender = new();
@@ -31,10 +34,8 @@ public class HousekeepingService
 
     public void NotifyHousekeeper(CleaningTask task)
     {
-        // Coupled to email — can't switch to SMS without changing this code
-        _emailSender.Send(
+        notifier.GenerateNotification(
             task.HousekeeperEmail,
-            "New cleaning task",
             $"Room {task.RoomId} needs {task.Type} on {task.Date:dd/MM/yyyy}");
     }
 }

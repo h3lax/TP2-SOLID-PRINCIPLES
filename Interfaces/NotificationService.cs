@@ -1,4 +1,4 @@
-namespace HotelReservation.Interfaces;
+namespace HotelReservation.Application;
 
 public class NotificationService : INotificationService
 {

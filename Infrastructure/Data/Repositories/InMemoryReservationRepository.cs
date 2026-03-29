@@ -1,7 +1,7 @@
 namespace HotelReservation.Infrastructure;
 
-using System.Runtime.CompilerServices;
 using HotelReservation.Domain;
+using HotelReservation.Application;
 
 public class InMemoryReservationRepository : IReservationManaging, IReservationFinancials, IReservationReading
 {

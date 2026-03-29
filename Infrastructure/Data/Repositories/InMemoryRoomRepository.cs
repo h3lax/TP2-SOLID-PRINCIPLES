@@ -1,6 +1,7 @@
 namespace HotelReservation.Infrastructure;
 
 using HotelReservation.Domain;
+using HotelReservation.Application;
 
 public class InMemoryRoomRepository : IRoomRepository
 {

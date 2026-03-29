@@ -1,6 +1,6 @@
 namespace HotelReservation.Domain;
 
-using HotelReservation.Infrastructure;
+using HotelReservation.Application; // not clean but not asked x)
 
 // ISP VIOLATION: Depends on IReservationRepository (9 methods) but only uses
 // GetById and GetTotalRevenue.

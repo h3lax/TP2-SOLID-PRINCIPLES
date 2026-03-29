@@ -188,6 +188,8 @@ Impossible de changer le stockage ou le logging sans modifier cette classe.
 2. Les implementations d'infrastructure implementent ces interfaces
 3. `BookingService` recoit les abstractions par constructeur
 
+  => Fait avec le DependancyConfig en 1.1 et BookingService est en réalité le ReservationService 
+
 #### 5.2 Module metier couple au module technique
 
 Fichier : `Services/HousekeepingService.cs`

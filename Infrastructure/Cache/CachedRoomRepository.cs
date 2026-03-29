@@ -1,5 +1,6 @@
 namespace HotelReservation.Infrastructure;
 
+using HotelReservation.Application;
 using HotelReservation.Domain;
 
 // LSP VIOLATION (Example 2): This implementation does not respect the contract

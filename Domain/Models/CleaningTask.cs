@@ -1,4 +1,4 @@
-namespace HotelReservation.Models;
+namespace HotelReservation.Domain;
 
 public class CleaningTask
 {

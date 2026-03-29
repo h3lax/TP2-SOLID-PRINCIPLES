@@ -1,6 +1,5 @@
-namespace HotelReservation.Interfaces;
+namespace HotelReservation.Domain;
 
-using HotelReservation.Models;
 
 // Linen change every 3 days
 public class StandardCleaningPolicy : ICleaningPolicy

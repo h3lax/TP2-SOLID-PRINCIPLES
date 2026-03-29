@@ -1,7 +1,6 @@
 namespace HotelReservation.Domain;
 
 using HotelReservation.Infrastructure;
-using HotelReservation.Models;
 
 // DIP VIOLATION (Example 2): High-level housekeeping logic directly depends on
 // low-level EmailSender. If we want to notify by SMS instead, we must modify this class.

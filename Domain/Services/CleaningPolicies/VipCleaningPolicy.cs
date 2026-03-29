@@ -1,6 +1,5 @@
-namespace HotelReservation.Interfaces;
+namespace HotelReservation.Domain;
 
-using HotelReservation.Models;
 
 // Linen change every day (VIP service)
 public class VipCleaningPolicy : ICleaningPolicy

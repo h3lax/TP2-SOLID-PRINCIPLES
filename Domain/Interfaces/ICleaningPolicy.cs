@@ -1,6 +1,5 @@
-namespace HotelReservation.Interfaces;
+namespace HotelReservation.Domain;
 
-using HotelReservation.Models;
 
 // OCP GOOD EXAMPLE (Strategy pattern): Adding a new cleaning policy only
 // requires creating a new implementation. No existing code needs to change.

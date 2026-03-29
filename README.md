@@ -105,8 +105,11 @@ Le code contient deja des exemples **conformes** a OCP. Identifiez-les et expliq
 pourquoi ils respectent OCP :
 
 - `Events/ReservationEventDispatcher.cs` — quel pattern ?
+  => Observer pattern, on peut rajouter autant d'events qu'on souhaite, le dispacher les distribuera sans avoir à être modifié
 - `Interfaces/IPriceCalculator.cs` + `SeasonalSurchargeDecorator.cs` — quel pattern ?
+  => Decorator pattern, pas besoin de modifier les méthodes de calcul du prix de base, on ajoute simplement des interfaces en fonction de nos besoins en mode wrapper
 - `Interfaces/ICleaningPolicy.cs` + implementations — quel pattern ?
+  => Je connaissais pas j'avoue. Strategy pattern? On dirait un peu un decorator inversé. On peut choisir l'interface qui applique la stratégie à mettre en place sans changer le code. ce sera toujours la même fonction qui sera appelée.
 
 #### 2.2 Corriger l'exemple mal fait
 
@@ -120,6 +123,8 @@ par politique (`FlexiblePolicy`, `ModeratePolicy`, `StrictPolicy`, `NonRefundabl
 Le `CancellationService` recoit la bonne politique par injection.
 
 ---
+- Justification :
+  => Mise en place du Strategy pattern observé dans le CleaningPolicy, c'est le meme besoin ici en fait
 
 ### Exercice 3 — LSP (Liskov Substitution Principle)
 
@@ -182,6 +187,8 @@ Impossible de changer le stockage ou le logging sans modifier cette classe.
 1. Definir `IReservationRepository` et `ILogger` **dans le meme namespace que le service metier**
 2. Les implementations d'infrastructure implementent ces interfaces
 3. `BookingService` recoit les abstractions par constructeur
+
+  => Fait avec le DependancyConfig en 1.1 et BookingService est en réalité le ReservationService 
 
 #### 5.2 Module metier couple au module technique
 

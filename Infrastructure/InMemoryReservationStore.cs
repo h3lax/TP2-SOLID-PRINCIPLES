@@ -1,6 +1,6 @@
 namespace HotelReservation.Infrastructure;
 
-using HotelReservation.Models;
+using HotelReservation.Domain;
 
 public class InMemoryReservationStore
 {

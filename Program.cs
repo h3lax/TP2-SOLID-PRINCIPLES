@@ -1,18 +1,32 @@
-using HotelReservation.Models;
-using HotelReservation.Services;
-using HotelReservation.Interfaces;
-using HotelReservation.Events;
-using HotelReservation.Repositories;
+using HotelReservation.Domain;
+using HotelReservation.Application;
+using HotelReservation.Infrastructure;
+
+
 
 Console.WriteLine("=== Le Mas des Oliviers - Hotel Management System ===");
 Console.WriteLine();
 
 // ---------------------------------------------------------------
+// Scenario 0: Chargement config et fixtures
+// ---------------------------------------------------------------
+
+var roomsMock = new List<Room>
+{
+    new Room { Id = "101", Type = "Standard", MaxGuests = 2, PricePerNight = 80m },
+    new Room { Id = "102", Type = "Standard", MaxGuests = 2, PricePerNight = 80m },
+    new Room { Id = "201", Type = "Suite", MaxGuests = 2, PricePerNight = 200m },
+    new Room { Id = "301", Type = "Family", MaxGuests = 4, PricePerNight = 120m }
+};
+
+DependencyConfig.InitData(roomsMock);
+var reservationService = DependencyConfig.GetReservationService();
+var checkInService = DependencyConfig.GetCheckInService();
+
+// ---------------------------------------------------------------
 // Scenario 1: Creating Reservations (uses ReservationService — SRP violation)
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 1: Creating Reservations ---");
-
-var reservationService = new ReservationService();
 
 var id1 = reservationService.CreateReservation(
     "Alice Martin", "101", new DateTime(2025, 6, 15), new DateTime(2025, 6, 18),
@@ -51,7 +65,7 @@ Console.WriteLine();
 // Scenario 3: Cancellation (uses CancellationService — OCP violation)
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 3: Cancellation ---");
-var cancellationService = new CancellationService();
+var cancellationService = DependencyConfig.GetCancellationService();
 var aliceReservation = reservationService.GetReservation(id1)!;
 aliceReservation.CancellationPolicy = "Flexible";
 cancellationService.CancelReservation(aliceReservation, new DateTime(2025, 6, 10));
@@ -62,7 +76,6 @@ Console.WriteLine();
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 4: Check-In / Check-Out ---");
 var bobReservation = reservationService.GetReservation(id2)!;
-var checkInService = new CheckInService(new Dictionary<string, Reservation>());
 checkInService.ProcessCheckIn(bobReservation);
 Console.WriteLine($"[OK] {bobReservation.GuestName} checked in to Room {bobReservation.RoomId}");
 checkInService.ProcessCheckOut(bobReservation);
@@ -94,6 +107,8 @@ Console.WriteLine();
 // Scenario 6: Housekeeping Schedule (uses Reservation.GetLinenChangeDays — SRP violation)
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 6: Housekeeping Schedule ---");
+
+var houseKeepingScheduler = new HousekeepingScheduler();
 var bobForHousekeeping = new Reservation
 {
     Id = id2,
@@ -104,7 +119,7 @@ var bobForHousekeeping = new Reservation
     GuestCount = 2,
     RoomType = "Suite"
 };
-var bobLinenDays = bobForHousekeeping.GetLinenChangeDays();
+var bobLinenDays = houseKeepingScheduler.GetLinenChangeDays(bobForHousekeeping);
 Console.WriteLine($"Linen change schedule for Bob Dupont (Room 201, 15/06 -> 22/06):");
 foreach (var day in bobLinenDays)
     Console.WriteLine($"  - {day:dd/MM/yyyy}");
@@ -119,7 +134,7 @@ var durandForHousekeeping = new Reservation
     GuestCount = 4,
     RoomType = "Family"
 };
-var durandLinenDays = durandForHousekeeping.GetLinenChangeDays();
+var durandLinenDays = houseKeepingScheduler.GetLinenChangeDays(durandForHousekeeping);
 Console.WriteLine($"Cleaning tasks for Famille Durand (Room 301, 20/06 -> 25/06):");
 foreach (var day in durandLinenDays)
     Console.WriteLine($"  - {day:dd/MM/yyyy}");
@@ -169,20 +184,21 @@ Console.WriteLine();
 // Scenario 9: LSP Violation Demo
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 9: LSP Violation Demo ---");
-ICancellable flexibleRes = new FlexibleReservation
+ICancellableReservation flexibleRes = new FlexibleReservation
 {
     Id = "FLEX-001", GuestName = "Test Flexible", TotalPrice = 200m
 };
 flexibleRes.Cancel();
 Console.WriteLine($"[OK] Flexible reservation cancelled, refund: {flexibleRes.CalculateRefund():F2} EUR");
 
-ICancellable nonRefundableRes = new NonRefundableReservation
+IReservation nonRefundableRes = new NonRefundableReservation
 {
     Id = "NR-001", GuestName = "Test NonRefundable", TotalPrice = 200m
 };
 try
 {
-    nonRefundableRes.Cancel(); // This will throw!
+    // nonRefundableRes.Cancel(); // This will throw!
+    throw new InvalidOperationException("now it's not a runtime, it's just not compiling thx to clean architecture !");
 }
 catch (InvalidOperationException ex)
 {

@@ -6,9 +6,9 @@ using HotelReservation.Infrastructure;
 // GetById and GetTotalRevenue.
 public class BillingService
 {
-    private readonly IReservationRepository _repo;
+    private readonly IReservationFinancials _repo;
 
-    public BillingService(IReservationRepository repo)
+    public BillingService(IReservationFinancials repo)
     {
         _repo = repo;
     }

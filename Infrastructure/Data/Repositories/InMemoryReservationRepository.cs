@@ -1,8 +1,9 @@
 namespace HotelReservation.Infrastructure;
 
+using System.Runtime.CompilerServices;
 using HotelReservation.Domain;
 
-public class InMemoryReservationRepository : IReservationRepository
+public class InMemoryReservationRepository : IReservationManaging, IReservationFinancials, IReservationReading
 {
     private readonly Dictionary<string, Reservation> _reservations = new();
 
@@ -52,9 +53,10 @@ public class InMemoryReservationRepository : IReservationRepository
 
     public decimal GetTotalRevenue(DateTime from, DateTime to)
     {
+        var calc = new BillingCalculator();
         return _reservations.Values
             .Where(r => r.CheckIn >= from && r.CheckOut <= to && r.Status != "Cancelled")
-            .Sum(r => r.CalculateTotal());
+            .Sum(r => calc.CalculateTotal(r));
     }
 
     public Dictionary<string, int> GetOccupancyStats(DateTime from, DateTime to)

@@ -6,7 +6,7 @@ namespace HotelReservation.Domain;
 // It is coupled to changes in Reservation even if those changes are irrelevant.
 public class InvoiceGenerator
 {
-    public Invoice Generate(Reservation reservation)
+    public Invoice Generate(IInvoiceData reservation)
     {
         // Only uses: GuestName, CheckIn, CheckOut, RoomType, GuestCount, RoomId
         // Does NOT use: Status, CancellationPolicy, Email, TotalPrice, Id
@@ -36,7 +36,7 @@ public class InvoiceGenerator
         };
     }
 
-    public void PrintInvoice(Invoice invoice, Reservation reservation)
+    public void PrintInvoice(Invoice invoice, IInvoiceData reservation)
     {
         Console.WriteLine($"Invoice for {invoice.GuestName}:");
         Console.WriteLine($"  Room: {invoice.RoomDescription}, " +

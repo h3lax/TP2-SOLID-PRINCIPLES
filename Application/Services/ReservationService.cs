@@ -11,7 +11,7 @@ using HotelReservation.Domain;
 public class ReservationService (
     IFileLogger logger,
     IRoomRepository roomRepository,
-    IReservationRepository reservationRepository,
+    IReservationManaging reservationRepository,
     ReservationLogic reservationLogic
     )
 {

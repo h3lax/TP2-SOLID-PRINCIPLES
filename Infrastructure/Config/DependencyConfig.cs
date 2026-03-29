@@ -5,7 +5,7 @@ using HotelReservation.Domain;
 
 public static class DependencyConfig
 {
-    private static readonly IReservationRepository _resRepo = new InMemoryReservationRepository();
+    private static readonly IReservationManaging _resRepo = new InMemoryReservationRepository();
     private static readonly IRoomRepository _roomRepo = new InMemoryRoomRepository(_resRepo);
     private static readonly IFileLogger _logger = new FileLogger();
     private static readonly ReservationLogic _reservationlogic = new(); // voir rajouter une interface? ou rendre static?

@@ -5,7 +5,7 @@ namespace HotelReservation.Domain;
 // - Accountant: billing (CalculateTotal, GenerateInvoiceLine)
 // - Housekeeper: cleaning schedule (GetLinenChangeDays)
 
-public class Reservation
+public class Reservation : IBillingData
 {
     public string Id { get; set; } = string.Empty;
     public string GuestName { get; set; } = string.Empty;

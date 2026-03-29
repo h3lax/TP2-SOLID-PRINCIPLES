@@ -1,6 +1,5 @@
-namespace HotelReservation.Services;
+namespace HotelReservation.Domain;
 
-using HotelReservation.Models;
 
 // ISP VIOLATION (Example 2): This class takes a full Reservation object but
 // only uses 5 fields (GuestName, CheckIn, CheckOut, RoomType, GuestCount).

@@ -1,6 +1,4 @@
-namespace HotelReservation.Interfaces;
-
-using HotelReservation.Models;
+namespace HotelReservation.Domain;
 
 public class BasePriceCalculator : IPriceCalculator
 {

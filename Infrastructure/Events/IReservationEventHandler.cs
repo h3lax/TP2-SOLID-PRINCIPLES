@@ -1,4 +1,4 @@
-namespace HotelReservation.Events;
+namespace HotelReservation.Infrastructure;
 
 // OCP GOOD EXAMPLE (Observer pattern): New handlers can be registered
 // without modifying the dispatcher or existing handlers.

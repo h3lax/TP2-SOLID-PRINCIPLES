@@ -1,4 +1,4 @@
-namespace HotelReservation.Events;
+namespace HotelReservation.Infrastructure;
 
 public class EmailConfirmationHandler : IReservationEventHandler
 {

@@ -1,6 +1,7 @@
 using HotelReservation.Domain;
 using HotelReservation.Application;
 using HotelReservation.Infrastructure;
+using HotelReservation.Services;
 
 
 
@@ -107,6 +108,8 @@ Console.WriteLine();
 // Scenario 6: Housekeeping Schedule (uses Reservation.GetLinenChangeDays — SRP violation)
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 6: Housekeeping Schedule ---");
+
+var houseKeepingScheduler = new HousekeepingScheduler();
 var bobForHousekeeping = new Reservation
 {
     Id = id2,
@@ -117,7 +120,7 @@ var bobForHousekeeping = new Reservation
     GuestCount = 2,
     RoomType = "Suite"
 };
-var bobLinenDays = bobForHousekeeping.GetLinenChangeDays();
+var bobLinenDays = houseKeepingScheduler.GetLinenChangeDays(bobForHousekeeping);
 Console.WriteLine($"Linen change schedule for Bob Dupont (Room 201, 15/06 -> 22/06):");
 foreach (var day in bobLinenDays)
     Console.WriteLine($"  - {day:dd/MM/yyyy}");
@@ -132,7 +135,7 @@ var durandForHousekeeping = new Reservation
     GuestCount = 4,
     RoomType = "Family"
 };
-var durandLinenDays = durandForHousekeeping.GetLinenChangeDays();
+var durandLinenDays = houseKeepingScheduler.GetLinenChangeDays(durandForHousekeeping);
 Console.WriteLine($"Cleaning tasks for Famille Durand (Room 301, 20/06 -> 25/06):");
 foreach (var day in durandLinenDays)
     Console.WriteLine($"  - {day:dd/MM/yyyy}");
@@ -182,14 +185,14 @@ Console.WriteLine();
 // Scenario 9: LSP Violation Demo
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 9: LSP Violation Demo ---");
-ICancellable flexibleRes = new FlexibleReservation
+ICancellableReservation flexibleRes = new FlexibleReservation
 {
     Id = "FLEX-001", GuestName = "Test Flexible", TotalPrice = 200m
 };
 flexibleRes.Cancel();
 Console.WriteLine($"[OK] Flexible reservation cancelled, refund: {flexibleRes.CalculateRefund():F2} EUR");
 
-ICancellable nonRefundableRes = new NonRefundableReservation
+IReservation nonRefundableRes = new NonRefundableReservation
 {
     Id = "NR-001", GuestName = "Test NonRefundable", TotalPrice = 200m
 };

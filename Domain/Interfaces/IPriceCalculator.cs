@@ -1,6 +1,5 @@
-namespace HotelReservation.Interfaces;
+namespace HotelReservation.Domain;
 
-using HotelReservation.Models;
 
 // OCP GOOD EXAMPLE: Adding a new pricing rule (e.g., loyalty discount) only
 // requires creating a new decorator class. No existing code needs to change.

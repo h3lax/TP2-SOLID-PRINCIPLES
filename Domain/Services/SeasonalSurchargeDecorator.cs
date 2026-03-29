@@ -1,6 +1,5 @@
-namespace HotelReservation.Interfaces;
+namespace HotelReservation.Domain;
 
-using HotelReservation.Models;
 
 // OCP GOOD EXAMPLE (Decorator pattern): Adds seasonal pricing without modifying
 // the base calculator. New decorators can be stacked without touching existing code.

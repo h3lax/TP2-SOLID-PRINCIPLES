@@ -1,4 +1,4 @@
-namespace HotelReservation.Events;
+namespace HotelReservation.Infrastructure;
 
 // OCP GOOD EXAMPLE: Adding a new handler (e.g., audit, analytics) requires
 // only registering it. The dispatcher code never changes.

@@ -123,6 +123,8 @@ par politique (`FlexiblePolicy`, `ModeratePolicy`, `StrictPolicy`, `NonRefundabl
 Le `CancellationService` recoit la bonne politique par injection.
 
 ---
+- Justification :
+  => Mise en place du Strategy pattern observé dans le CleaningPolicy, c'est le meme besoin ici en fait
 
 ### Exercice 3 — LSP (Liskov Substitution Principle)
 

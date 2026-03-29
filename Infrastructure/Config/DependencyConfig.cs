@@ -17,10 +17,10 @@ public static class DependencyConfig
         return new ReservationService(_logger, _roomRepo, _resRepo, _reservationlogic);
     }
 
-    // public static CancellationService GetCancellationService()
-    // {
-    //     return new CancellationService(_resRepo, _logger);
-    // }
+    public static CancellationService GetCancellationService()
+    {
+        return new CancellationService();
+    }
 
     public static ICheckInService GetCheckInService()
     {

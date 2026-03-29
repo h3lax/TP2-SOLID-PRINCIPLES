@@ -21,6 +21,7 @@ var roomsMock = new List<Room>
 
 DependencyConfig.InitData(roomsMock);
 var reservationService = DependencyConfig.GetReservationService();
+var checkInService = DependencyConfig.GetCheckInService();
 
 // ---------------------------------------------------------------
 // Scenario 1: Creating Reservations (uses ReservationService — SRP violation)
@@ -75,7 +76,6 @@ Console.WriteLine();
 // ---------------------------------------------------------------
 Console.WriteLine("--- Scenario 4: Check-In / Check-Out ---");
 var bobReservation = reservationService.GetReservation(id2)!;
-var checkInService = new CheckInService(new Dictionary<string, Reservation>());
 checkInService.ProcessCheckIn(bobReservation);
 Console.WriteLine($"[OK] {bobReservation.GuestName} checked in to Room {bobReservation.RoomId}");
 checkInService.ProcessCheckOut(bobReservation);

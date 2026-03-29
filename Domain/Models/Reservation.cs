@@ -62,4 +62,9 @@ public class Reservation
     {
         return $"{GuestName} | {CheckIn:dd/MM} -> {CheckOut:dd/MM} | {CalculateTotal():F2} EUR";
     }
+
+    public void ApplyLateCheckInFee(decimal fee)
+    {
+        TotalPrice += fee;
+    }
 }

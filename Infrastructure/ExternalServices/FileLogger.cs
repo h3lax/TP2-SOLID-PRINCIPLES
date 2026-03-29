@@ -1,4 +1,6 @@
-namespace HotelReservation.Application;
+namespace HotelReservation.Infrastructure;
+
+using HotelReservation.Application;
 
 // Simulates file-based logging (uses Console for demo purposes).
 // The SOLID violation is the direct coupling, not the I/O mechanism.

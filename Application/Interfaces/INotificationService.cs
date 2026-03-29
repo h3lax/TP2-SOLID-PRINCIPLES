@@ -1,4 +1,4 @@
-namespace HotelReservation.Interfaces;
+namespace HotelReservation.Application;
 
 // ISP VIOLATION: BookingService only sends emails, HousekeepingService only
 // sends SMS, yet both depend on this interface with 4 methods.

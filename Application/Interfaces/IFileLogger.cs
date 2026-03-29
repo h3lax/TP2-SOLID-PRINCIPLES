@@ -1,6 +1,5 @@
 namespace HotelReservation.Application ;
 
-
 public interface IFileLogger
 {
     public void Log (string message) ;

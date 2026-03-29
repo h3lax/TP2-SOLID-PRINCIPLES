@@ -2,6 +2,9 @@ namespace HotelReservation.Domain;
 
 public abstract class DomainException(string message) : Exception(message);
 
+public class CancellationForbidden()
+    : DomainException("Cannot cancel after check-in");
+
 public class WrongStatusReservation(string status) 
     : DomainException($"Cannot check in: reservation is {status}");
     

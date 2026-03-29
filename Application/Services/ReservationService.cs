@@ -30,7 +30,7 @@ public class ReservationService (
         var room = roomRepository.GetAvailableRooms(checkIn, checkOut).FirstOrDefault(r => r.Id == roomId);
 
         if (room == null)
-            throw new RoomNotFound();
+            throw new RoomNotAvailableException(roomId, checkIn, checkOut);
 
         // à voir de créer une fonction main reservationLogic qui fait tout d'un coup
         reservationLogic.ValidateBooking(room, guestCount, checkIn, checkOut);

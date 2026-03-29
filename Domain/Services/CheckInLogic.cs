@@ -19,7 +19,7 @@ public class CheckInLogic
 
     public void ValidateCheckOutStatus(Reservation reservation)
     {
-        if (reservation.Status != "Confirmed")
+        if (reservation.Status != "CheckedIn")
             throw new WrongStatusReservation(reservation.Status);
 
     }    

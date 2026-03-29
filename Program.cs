@@ -198,7 +198,8 @@ IReservation nonRefundableRes = new NonRefundableReservation
 };
 try
 {
-    nonRefundableRes.Cancel(); // This will throw!
+    // nonRefundableRes.Cancel(); // This will throw!
+    throw new InvalidOperationException("now it's not a runtime, it's just not compiling thx to clean architecture !");
 }
 catch (InvalidOperationException ex)
 {
